@@ -1,21 +1,24 @@
 <!-- Layout -->
 <template>
   <div class="app-page">
-    <Header v-if="!getIsSinglePage"></Header>
-    <Tags v-if="!getIsSinglePage&&showTags" :class="{'app-tags_nail':this.app.sidebar.thumbnail}"></Tags>
+    <Header
+      :leftWidth="siderWidth()"
+      v-if="!getIsSinglePage"
+      :style="{height:style.header.height,'line-height':style.header.height}"
+    ></Header>
+    <Tags
+      v-if="!getIsSinglePage&&showTags"
+      :class="{'app-tags_nail':this.app.sidebar.thumbnail}"
+      :style="{top:style.header.height,height:style.tags.height,left:siderWidth(),width:'calc(100vw - '+siderWidth()+')'}"
+    ></Tags>
     <Sider
       v-if="!getIsSinglePage&&showSider"
       :mode="getMenuSider"
-      :class="{'app-sider_nail':this.app.sidebar.thumbnail}"
+      :style="{width:showSider?siderWidth():'inherit',height:showSider?'calc(100vh - '+ style.header.height+')':'inherit' ,top:style.header.height}"
     ></Sider>
-    <div
-      class="app-content"
-      :class="{'app-content_nosider':!showSider,'app-content_thumbnail':showSider&&this.app.sidebar.thumbnail,
-    'app-content_crumb':showCrumb,'app-content_tags':showTags,'app-content_crumb_tags':showTags&&showCrumb}"
-      :style="{padding:getIsSinglePage?'15px':'75px 15px 15px 215px'}"
-    >
+    <div class="app-content" :style="{padding:contentPadding()}">
       <Crumb v-if="!getIsSinglePage&&showCrumb"></Crumb>
-      <Content></Content>
+      <Content :minHeight="contentHeight()"></Content>
     </div>
     <!-- <Footer  v-if="!getIsSinglePage"></Footer> -->
   </div>
@@ -39,8 +42,21 @@ export default {
   },
   data() {
     return {
-      content: {
-        style: {
+      style: {
+        header: {
+          height: "60px"
+        },
+        tags: {
+          height: "41px"
+        },
+        crumb: {
+          height: "30px"
+        },
+        sider: {
+          width: "200px",
+          widthNail: "64px"
+        },
+        content: {
           padding: "15px"
         }
       }
@@ -51,20 +67,115 @@ export default {
     getIsSinglePage() {
       return this.app.isSinglePage;
     },
-    showBorder(){
-      return this.app.hasBorder;
-    },
     showCrumb() {
       return this.app.crumb.show;
     },
     showSider() {
       return this.app.menuMode == "vertical";
     },
+    siderNail() {
+      return this.app.sidebar.thumbnail;
+    },
     getMenuSider() {
       return this.app.menuMode;
     },
     showTags() {
       return this.app.tags.show;
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getIsSinglePage &&
+        to.query.pagePadding &&
+        (vm.style.content.padding = to.query.pagePadding);
+    });
+  },
+  methods: {
+    siderWidth() {
+      return this.getIsSinglePage || !this.showSider
+        ? '0px'
+        : this.siderNail
+        ? this.style.sider.widthNail
+        : this.style.sider.width;
+    },
+    contentPadding() {
+      let padd = this.getContent();
+      return padd.contentPadding;
+    },
+    contentHeight() {
+      let minHeight = this.getContent();
+      return "calc(100vh - " + minHeight.contentMinHeight + ")";
+    },
+    getContent() {
+      let contentPadd = this.style.content.padding;
+      let heightHeader = this.style.header.height;
+      let heightTags = this.style.tags.height;
+      let heightCrumb = this.style.crumb.height;
+
+      //padding
+      let hegitHT =
+        parseInt(heightHeader) +
+        parseInt(heightTags) +
+        parseInt(contentPadd) +
+        "px";
+      let hegitHTC = parseInt(heightHeader) + parseInt(heightTags) + "px";
+
+      let contentPaddTop = this.getIsSinglePage
+        ? contentPadd
+        : this.showTags && !this.showCrumb
+        ? hegitHT
+        : this.showTags && this.showCrumb
+        ? hegitHTC
+        : !this.showTags && this.showCrumb
+        ? heightHeader
+        : parseInt(heightHeader) + parseInt(contentPadd) + "px";
+
+      let contentPaddRight = this.getIsSinglePage
+        ? contentPadd
+        : parseInt(this.siderWidth()) + parseInt(contentPadd) + "px";
+
+      //min-height
+      let singleInitHeight = parseInt(contentPadd) * 2 + "px";
+      let contentInitHeight =
+        parseInt(heightHeader) + parseInt(contentPadd) * 2 + "px";
+      let contentC =
+        parseInt(heightHeader) +
+        parseInt(contentPadd) +
+        parseInt(heightCrumb) +
+        "px";
+      let contentT =
+        parseInt(heightHeader) +
+        parseInt(contentPadd) * 2 +
+        parseInt(heightTags) +
+        "px";
+      let contentTC =
+        parseInt(heightHeader) +
+        parseInt(contentPadd) +
+        parseInt(heightTags) +
+        parseInt(heightCrumb) +
+        "px";
+      let contentMinHeight =
+        this.showCrumb && !this.showTags
+          ? contentC
+          : !this.showCrumb && this.showTags
+          ? contentT
+          : this.showCrumb && this.showTags
+          ? contentTC
+          : contentInitHeight;
+      return {
+        contentPadding: this.getIsSinglePage
+          ? contentPadd
+          : contentPaddTop +
+            " " +
+            contentPadd +
+            " " +
+            contentPadd +
+            " " +
+            contentPaddRight,
+        contentMinHeight: this.getIsSinglePage
+          ? singleInitHeight
+          : contentMinHeight
+      };
     }
   }
 };

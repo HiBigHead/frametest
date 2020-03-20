@@ -1,7 +1,7 @@
 <!-- Header -->
 <template>
   <div class="app-header">
-    <div class="left" :class='{"left_thumbnail":siderThumbnail}'>left</div>
+    <div class="left" :class='{"left_thumbnail":siderThumbnail}' :style="{'flex-basis':leftWidth}">left</div>
     <div class="right">
       <div v-if='showSider'>
         <el-button  @click='setSiderThumbnail' type="primary" :icon="siderThumbnail?'el-icon-s-unfold':'el-icon-s-fold'"></el-button>
@@ -22,6 +22,9 @@ export default {
   components:{
     Sider,
     Tail
+  },
+  props:{
+    leftWidth:String
   },
   data() {
     return {};

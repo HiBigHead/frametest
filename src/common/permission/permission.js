@@ -4,6 +4,7 @@ import store from '../../data/store'
 
 router.beforeEach(async (to, from, next) => {
     if (store.getters.permission.addRouters.length === 0) {
+        to.query.isSinglePage&&store.dispatch('setIsSinglePage')
         store
             .dispatch('GenerateRoutes').then(() => {
                 router.addRoutes(store.getters.permission.addRouters.concat({ path: '*', redirect: '/404' }))

@@ -1,47 +1,23 @@
 $bg-color=#eee
-$sider-width=200px
-$header-height=60px
-$app-sider-height=calc(100vh - 60px)
-$sider-width_nail=64px
-$app-content-padding=15px
-$app-content-cont-height=calc(100vh - 90px )// $header-height + $app-content-padding*2
-$app-content-cont-height_crumb=calc(100vh - 105px )// $header-height + $app-content-padding + .app-crumb
-$app-content-cont-height_tags=calc(100vh - 131px )// $header-height + $app-content-padding*2 + $app-tags-height
-$app-content-cont-height_crumb_tags=calc(100vh - 146px )// $header-height + $app-content-padding + $app-tags-height + .app-crumb
-$app-tags-width=calc(100vw - 200px )// $sider-width
-$app-tags-width_nail=calc(100vw - 64px )// $sider-width_nail
-$app-tags-height=41px
-$app-content_tags-paddingtop=$header-height+$app-tags-height+$app-content-padding
-$app-content_crumb_tags-paddingtop=$header-height+$app-tags-height
 .app-header
   width 100vw
-  height $header-height
-  line-height $header-height
   display flex
   position fixed
   background-color $bg-color
   .left
-    flex-basis $sider-width
     background-color white
     text-align center
-  .left_thumbnail
-    flex-basis $sider-width_nail
   .right
     flex 1
     background-color white
     display flex
 .app-tags
   position fixed
-  left $sider-width
-  top $header-height
-  width $app-tags-width
-  height $app-tags-height
   background-color white
   .el-tabs__header
     margin-bottom 0
   .el-tabs__content
     width 100%
-    height $app-tags-cont-height
     background-color $bg-color
     padding 15px
     overflow auto
@@ -51,50 +27,21 @@ $app-content_crumb_tags-paddingtop=$header-height+$app-tags-height
 .app-sider
   flex 1
 .app-sider-ver
-  width $sider-width
-  height $app-sider-height
-  top $header-height
-  overflow-y hidden
+  overflow-y auto
+  overflow-x hidden
   word-break break-all
   background-color white
   position fixed
   left 0
-.app-sider_nail
-  width $sider-width_nail
 .app-tags
-  width $app-tags-width
-  height $app-tags-height
   overflow hidden
   background-color white
   position fixed
-  top $header-height
-  left $sider-width
   .el-tabs__header
     margin 0
-.app-tags_nail
-   width $app-tags-width_nail
-   left $sider-width_nail
 .app-content
-  padding $header-height+$app-content-padding $app-content-padding $app-content-padding $sider-width+$app-content-padding
   min-height 100vh
   .app-crumb
     padding 8px 0
   .app-content-cont
     background-color white
-    min-height $app-content-cont-height
-.app-content_nosider
-   padding $header-height+$app-content-padding $app-content-padding $app-content-padding
-.app-content_thumbnail
-   padding $header-height+$app-content-padding $app-content-padding $app-content-padding $sider-width_nail+$app-content-padding
-.app-content_crumb
-  padding-top $header-height
-  .app-content-cont
-    min-height $app-content-cont-height_crumb
-.app-content_tags
-  padding-top $app-content_tags-paddingtop
-  .app-content-cont
-    min-height $app-content-cont-height_tags
-.app-content_crumb_tags
-  padding-top $app-content_crumb_tags-paddingtop
-  .app-content-cont
-    min-height $app-content-cont-height_crumb_tags

@@ -14,7 +14,7 @@
       :mode="mode"
     >
       <template v-for="item in getMenuNavs">
-        <template v-if="item.hasPermission&&item.path!='*'&&item.meta.isShow">
+        <template v-if="item.path!='*'&&item.meta.isShow">
           <el-menu-item
             v-if="!item.pathChildrenShow||item.children<1"
             :index="item.pathNav"
@@ -31,7 +31,7 @@
               </template>
               <template v-if="item.children">
                 <template v-for="item2 in item.children">
-                  <template v-if="item2.hasPermission&&item2.meta.isShow">
+                  <template v-if="item2.meta.isShow">
                     <el-menu-item
                       v-if="!item2.pathChildrenShow||item2.children<1"
                       :index="item2.pathNav"
@@ -55,7 +55,7 @@
                         <template v-if="item2.children">
                           <template v-if="item2.children">
                             <template v-for="item3 in item2.children">
-                              <template v-if="item3.hasPermission&&item3.meta.isShow">
+                              <template v-if="item3.meta.isShow">
                                 <el-menu-item
                                   v-if="!item3.pathChildrenShow||item3.children<1"
                                   :index="item3.pathNav"
@@ -123,7 +123,29 @@ export default {
   methods: {
     isActive(item) {
       let path = this.$route.path;
-      return item.redirect == path || item.pathList.includes(path);
+      let currentNav = false;
+      let hasPath = this.hasPathFn(item, path);
+      if (path == item.pathNav || path == item.redirect || hasPath) {
+        currentNav = true;
+      }
+      return currentNav;
+    },
+    hasPathFn(item, path) {
+      let hasPath = false;
+      item.children &&
+        item.children.forEach(function(item2) {
+          if (item2.pathNav == path) {
+            hasPath = true;
+          } else {
+            item2.children &&
+              item2.children.forEach(function(item3) {
+                if (item3.pathNav == path) {
+                  hasPath = true;
+                } 
+              });
+          }
+        });
+      return hasPath;
     }
   }
 };

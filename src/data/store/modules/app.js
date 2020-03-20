@@ -1,8 +1,7 @@
 const app = {
     state: {
         routes: {},
-        isSinglePage:true,//是否显示框架
-        hasBorder:true,//单页情况下有无边框
+        isSinglePage:false,//是否显示框架
         menuMode: 'vertical',//vertical,horizontal 
         sidebar: {
             thumbnail: false,
@@ -13,7 +12,7 @@ const app = {
 
         },
         crumb: {
-            show: true,
+            show: false,
             separator: '/',
             separatorClass: ''
         },
@@ -24,6 +23,9 @@ const app = {
         }
     },
     mutations: {
+        SET_IS_SINGLE_PAFE:state => {
+            state.isSinglePage = !state.isSinglePage
+        },
         SET_SIDEBAR_THUMBNAIL: state => {
             state.sidebar.thumbnail = !state.sidebar.thumbnail
         },
@@ -42,6 +44,9 @@ const app = {
         }
     },
     actions: {
+        setIsSinglePage({commit}){
+            commit('SET_IS_SINGLE_PAFE')
+        },
         setSideBarThumbnail({ commit }) {
             commit('SET_SIDEBAR_THUMBNAIL')
         },

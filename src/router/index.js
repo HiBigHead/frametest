@@ -24,7 +24,7 @@ export const pagesRouterList = [
         name: 'Index',
         meta: {
             title: '首页',
-            icon: 'breakfast',
+            icon: '',
             sort: '',
             isShow: true,
             noCache: false
@@ -34,7 +34,7 @@ export const pagesRouterList = [
                 path: 'index',
                 component: _import('Index/index'),
                 meta: {
-                    title: '首页i',
+                    title: '首页',
                     icon: '',
                     sort: '',
                     isShow: false,
@@ -126,7 +126,7 @@ export const pagesRouterList = [
                             title: 'API列表get1',
                             icon: '',
                             sort: '',
-                            isShow: false,
+                            isShow: true,
                             noCache: false
                         },
                         children: [
@@ -140,7 +140,7 @@ export const pagesRouterList = [
                             title: 'API列表post',
                             icon: '',
                             sort: '',
-                            isShow: false,
+                            isShow: true,
                             noCache: false
                         }
                     }, {

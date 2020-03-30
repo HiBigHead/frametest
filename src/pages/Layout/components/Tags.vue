@@ -23,7 +23,7 @@ export default {
   computed: {
     ...mapGetters(["app"]),
     tagsList() {
-      return this.app.tags.tagsList;
+      return this.app.tags.tagsList.filter(item=>item.name);
     },
     activeTag: {
       get() {

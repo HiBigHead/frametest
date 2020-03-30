@@ -57,7 +57,7 @@ export default {
           widthNail: "64px"
         },
         content: {
-          padding: "15px"
+          padding: "10px"
         }
       }
     };

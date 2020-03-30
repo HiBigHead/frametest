@@ -1,6 +1,6 @@
 <!-- Content -->
 <template>
-  <div class="app-content-cont" :style="{'min-height':minHeight}">
+  <div class="app-content-cont" :style="{'height':minHeight}">
     <router-view></router-view>
   </div>
 </template>

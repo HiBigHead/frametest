@@ -17,7 +17,7 @@ const app = {
             separatorClass: ''
         },
         tags: {
-            show: false,
+            show: true,
             activeTag: '',
             tagsList: []
         }

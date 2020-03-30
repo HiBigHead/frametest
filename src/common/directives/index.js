@@ -2,11 +2,7 @@ import store from '../../data/store'
 export default {
   // 是否有按钮权限判定
   btnHas: {
-    inserted(el, binding, vnode) {
-      // 设置vnode key 强制更新指令
-      vnode.key = Math.random()
-        .toString()
-        .replace('0.', '_')
+    inserted(el, binding) {
       if (
         !store.getters.permission.btnPermissions.includes(binding.value)
       ) {

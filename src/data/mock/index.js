@@ -126,3 +126,10 @@ Mock.mock("/user/menu", "get", () => {
     message: "成功"
   };
 });
+Mock.mock("/list", "get", () => {
+  return {
+    status: 0,
+    data: dataList,
+    message: "成功"
+  };
+});

@@ -20,7 +20,12 @@ import '@/assets/icons'
 import './common/permission/permission'
 //模拟数据
 import './data/mock/index'  
-// 本页全局directive指令
+//全局过滤器
+import filters from './common/filters'
+Object.keys(filters).forEach(key=>{
+  Vue.filter(key,filters[key])
+})
+// 全局directive指令
 import directives from './common/directives'
 // 注册本页全局指令方法
 Object.keys(directives).forEach(key => {

@@ -9,6 +9,7 @@
       <img  src="~@/assets/images/baobao.png" alt="">
       </p>
     <div>
+      <h2>{{time|parseTime}}</h2>
       <ul>
         <li v-for="item in list" :key="item.id">{{item.name}}——{{item.creatTime}}</li>
       </ul>
@@ -22,7 +23,8 @@ export default {
   name: "Index",
   data() {
     return {
-      list:[]
+      list:[],
+      time:'2018-05-03'
     };
   },
   methods: {
